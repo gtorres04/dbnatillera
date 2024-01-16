@@ -1,0 +1,29 @@
+CREATE SCHEMA IF NOT EXISTS natillera;
+
+CREATE ROLE dql;
+CREATE ROLE dml;
+CREATE ROLE ddl;
+CREATE ROLE dcl;
+
+GRANT USAGE ON SCHEMA natillera TO dql;
+GRANT USAGE ON SCHEMA natillera TO dml;
+GRANT CREATE ON SCHEMA natillera TO ddl;
+GRANT CREATE ON DATABASE natillera TO dcl;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA natillera GRANT SELECT ON TABLES TO dql;
+ALTER DEFAULT PRIVILEGES IN SCHEMA natillera GRANT INSERT, UPDATE, DELETE ON TABLES TO dml;
+
+CREATE USER backoffice WITH PASSWORD 'backoffice';
+GRANT dql TO backoffice;
+GRANT dml TO backoffice;
+
+CREATE USER analyst WITH PASSWORD 'analyst';
+GRANT dql TO analyst;
+GRANT dml TO analyst;
+GRANT ddl TO analyst;
+
+CREATE USER dba WITH PASSWORD 'dba';
+GRANT dql TO dba;
+GRANT dml TO dba;
+GRANT ddl TO dba;
+GRANT dcl TO dba;
