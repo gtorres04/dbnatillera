@@ -54,3 +54,172 @@ WHERE r.rolname NOT IN ('pg_signal_backend','rds_iam',
 'rds_replication','rds_superuser',
 'rdsadmin','rdsrepladmin')
 ORDER BY 1;
+
+
+# LIQUIBASE
+```
+SheilaC.@MacBook-Pro-de-Gerlin dbnatillera % git config --global user.name "Sheila Cecilia Bermudez Florez"
+SheilaC.@MacBook-Pro-de-Gerlin dbnatillera % git config --global user.email sheilabermudz@gmail.com
+SheilaC.@MacBook-Pro-de-Gerlin dbnatillera % /Users/SheilaC./tools/liquibase-4.25.1/liquibase init project
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##                                                ##
+####################################################
+Starting Liquibase at 23:44:22 (version 4.25.1 #690 built at 2023-12-18 16:29+0000)
+Liquibase Version: 4.25.1
+Liquibase Open Source 4.25.1 by Liquibase
+Setup new liquibase.properties, flowfile, and sample changelog? Enter (Y)es with defaults, yes with (C)ustomization, or (N)o. [Y]: 
+y
+Setting up new Liquibase project in '/Users/SheilaC./Documents/workspaces/natillera-wkps/dbnatillera/.'...
+
+Created example changelog file '/Users/SheilaCDocuments/workspaces/natillera-wkps/dbnatillera/example-changelog.sql'
+Created example defaults file '/Users/SheilaCDocuments/workspaces/natillera-wkps/dbnatillera/liquibase.properties'
+Created example flow file '/Users/SheilaCDocuments/workspaces/natillera-wkps/dbnatillera/liquibase.advanced.flowfile.yaml'
+Created example flow file '/Users/SheilaCDocuments/workspaces/natillera-wkps/dbnatillera/liquibase.flowvariables.yaml'
+Created example flow file '/Users/SheilaCDocuments/workspaces/natillera-wkps/dbnatillera/liquibase.endstage.flow'
+Created example flow file '/Users/SheilaCDocuments/workspaces/natillera-wkps/dbnatillera/liquibase.flowfile.yaml'
+Created example checks package '/Users/SheilaCDocuments/workspaces/natillera-wkps/dbnatillera/liquibase.checks-package.yaml'
+
+To use the new project files make sure your database is active and accessible by opening a new terminal window to run "liquibase init start-h2", and then return to this terminal window to run "liquibase update" command.
+For more details, visit the Getting Started Guide at https://docs.liquibase.com/start/home.html
+Liquibase command 'init project' was executed successfully.
+SheilaC.@MacBook-Pro-de-Gerlin dbnatillera % docker run --name liquibase-postgres -e POSTGRES_PASSWORD=postgres -d postgres
+Unable to find image 'postgres:latest' locally
+latest: Pulling from library/postgres
+Digest: sha256:49c276fa02e3d61bd9b8db81dfb4784fe814f50f778dce5980a03817438293e3
+Status: Downloaded newer image for postgres:latest
+82d7f13080eb09ff261c6123e4d7dac612e1931ac68843f9fcf7eaec54cf3f4d
+SheilaC.@MacBook-Pro-de-Gerlin dbnatillera % docker run --name liquibase-postgres -p 5454:5432 -e POSTGRES_PASSWORD=postgres -d postgres
+88bb6a7066c288b53aa13d698e5213b21fae9def4a2ec9f92578543f1f500219
+SheilaC.@MacBook-Pro-de-Gerlin dbnatillera % cd liquibase-project 
+SheilaC.@MacBook-Pro-de-Gerlin liquibase-project % /Users/SheilaC./tools/liquibase-4.25.1/liquibase update                                    
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##                                                ##
+####################################################
+Starting Liquibase at 00:07:55 (version 4.25.1 #690 built at 2023-12-18 16:29+0000)
+Liquibase Version: 4.25.1
+Liquibase Open Source 4.25.1 by Liquibase
+Running Changeset: example-changelog.sql::1::your.name
+
+UPDATE SUMMARY
+Run:                          3
+Previously run:               0
+Filtered out:                 0
+-------------------------------
+Total change sets:            3
+
+ERROR: Exception Details
+ERROR: Exception Primary Class:  PSQLException
+ERROR: Exception Primary Reason: ERROR: syntax error at or near "auto_increment"
+  Position: 46
+ERROR: Exception Primary Source: PostgreSQL 16.1 (Debian 16.1-1.pgdg120+1)
+
+Unexpected error running Liquibase: Migration failed for changeset example-changelog.sql::1::your.name:
+     Reason: liquibase.exception.DatabaseException: ERROR: syntax error at or near "auto_increment"
+  Position: 46 [Failed SQL: (0) create table person (
+    id int primary key auto_increment not null,
+    name varchar(50) not null,
+    address1 varchar(50),
+    address2 varchar(50),
+    city varchar(30)
+)]
+
+For more information, please use the --log-level flag
+SheilaC.@MacBook-Pro-de-Gerlin liquibase-project % /Users/SheilaC./tools/liquibase-4.25.1/liquibase update
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##                                                ##
+####################################################
+Starting Liquibase at 00:10:42 (version 4.25.1 #690 built at 2023-12-18 16:29+0000)
+Liquibase Version: 4.25.1
+Liquibase Open Source 4.25.1 by Liquibase
+Running Changeset: example-changelog.sql::1::your.name
+
+UPDATE SUMMARY
+Run:                          3
+Previously run:               0
+Filtered out:                 0
+-------------------------------
+Total change sets:            3
+
+ERROR: Exception Details
+ERROR: Exception Primary Class:  PSQLException
+ERROR: Exception Primary Reason: ERROR: syntax error at or near "auto_increment"
+  Position: 46
+ERROR: Exception Primary Source: PostgreSQL 16.1 (Debian 16.1-1.pgdg120+1)
+
+Unexpected error running Liquibase: Migration failed for changeset example-changelog.sql::1::your.name:
+     Reason: liquibase.exception.DatabaseException: ERROR: syntax error at or near "auto_increment"
+  Position: 46 [Failed SQL: (0) create table person (
+    id int primary key auto_increment not null,
+    name varchar(50) not null,
+    address1 varchar(50),
+    address2 varchar(50),
+    city varchar(30)
+)]
+
+For more information, please use the --log-level flag
+SheilaC.@MacBook-Pro-de-Gerlin liquibase-project % /Users/SheilaC./tools/liquibase-4.25.1/liquibase update
+####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##                                                ##
+####################################################
+Starting Liquibase at 00:10:53 (version 4.25.1 #690 built at 2023-12-18 16:29+0000)
+Liquibase Version: 4.25.1
+Liquibase Open Source 4.25.1 by Liquibase
+Running Changeset: example-changelog.sql::1::your.name
+Running Changeset: example-changelog.sql::2::your.name
+Running Changeset: example-changelog.sql::3::other.dev
+
+UPDATE SUMMARY
+Run:                          3
+Previously run:               0
+Filtered out:                 0
+-------------------------------
+Total change sets:            3
+
+Liquibase: Update has been successful. Rows affected: 3
+Liquibase command 'update' was executed successfully.
+SheilaC.@MacBook-Pro-de-Gerlin liquibase-project % /Users/SheilaC./tools/liquibase-4.25.1/liquibase update
+```
